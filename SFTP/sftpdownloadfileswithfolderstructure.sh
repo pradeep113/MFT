@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 # Configuration
-sftp_host = '192.168.64.8'
+sftp_host = ''
 sftp_port = 22  # Default SFTP port
 sftp_port = 22  # Default SFTP port
 sftp_username = 'test'
