@@ -1,0 +1,4 @@
+EXT_FTPS_Partner1,ftpsabcd123@partner.com
+EXT_FTPS_Partner2,ftpsxyz123@partner.com
+EXT_FTPS_Partner3,ftpshellotest12@partner.com
+EXT_FTPS_partner4,ftpsexample123@partner.com

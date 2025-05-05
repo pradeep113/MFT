@@ -1,0 +1,4 @@
+sp_Partner1,spabcd123@partner.com
+sp_Partner2,spxyz123@partner.com
+sp_Partner3,sphellotest12@partner.com
+sp_partner4,spexample123@partner.com

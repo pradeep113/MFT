@@ -1,0 +1,4 @@
+AZ_blob_Partner1,storageaccount123
+az_blob_Partner2,abc_storageaccount
+az_blob_Partner3,xyz_storageaccount
+Az_blob_partner4,test_storageaccount

@@ -1,0 +1,4 @@
+EXT_SFTP_Partner1,abcd123@partner.com
+EXT_SFTP_Partner2,xyz123@partner.com
+EXT_SFTP_Partner3,hellotest12@partner.com
+EXT_SFTP_partner4,example123@partner.com
