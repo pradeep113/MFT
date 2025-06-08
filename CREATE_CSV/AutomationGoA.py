@@ -65,7 +65,9 @@ def on_submit():
         bool(value5),
         bool(str(value6)),
         bool(value7),
-        bool(value8)
+        bool(value8),
+        bool(value9),
+        bool(value10)
     ]):
         # Ensure email address is proper
         if value8 and validate_email(value8):
@@ -79,7 +81,11 @@ def on_submit():
                 ["SOURCEPATH_VALUE", value5],
                 ["TARGETSERVER_VALUE", value6],
                 ["TARGETPATH_VALUE", value7],
-                ["EMAIL_ADDRESS", value8]
+                ["EMAIL_ADDRESS", value8],
+                ["PATTERN_VALUE", value9],
+                ["DESCRIPTION_VALUE", value10],
+                ["ARCHIVE_VALUE", value11],
+                ["ARCHIVE_PATH_VALUE", value12]
             ], columns=["Variable", "Value"])
 
             # Check if the CSV file already exists
@@ -104,7 +110,9 @@ def on_submit():
 
 #_____________________________________________________________________________________________________________
 # Page Configuration
-    #st.set_page_config(page_title="MFT Developer Tool", layout="wide")
+    #st.set_page_config(page_title="GoAnywhere MFT Dev Tool", layout="wide")
+
+
 
 # Session state to manage login
 if "logged_in" not in st.session_state:
@@ -112,7 +120,7 @@ if "logged_in" not in st.session_state:
 
 if st.session_state["logged_in"]:
     # App Title
-    st.title("🌟 MFT Developer Tool")
+    st.title("🌟 GoAnywhere MFT Dev Tool")
     st.text("")
     # Load all files and variables
     df_sftp_res, df_ftps_res, df_networkshare_res, df_azblob_res, df_sharepoint_res = load_file_dataframe()
@@ -275,6 +283,18 @@ if st.session_state["logged_in"]:
     with st.expander("Advanced Settings"):  # Use expanders for optional settings
         value9 = st.text_input("File Pattern", "*.*")
         value10 = st.text_input("DESCRIPTION", pattern)
+    # Checkbox for Archive
+        archive_checked = st.checkbox("Archive")  # Checkbox input
+
+    # Store archive value based on user selection
+        value11 = "YES" if archive_checked else "NO"
+
+        # If archive is checked, show Archive Path input field
+        if value11 == "YES":
+            value12 = st.text_input("Enter Archive Path")
+        else:
+            value12 = "None"  # No archive path required
+
 
     # Submit and Logout Buttons
     col1, col2 = st.columns(2)

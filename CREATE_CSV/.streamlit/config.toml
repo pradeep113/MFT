@@ -1,8 +1,21 @@
 [theme]
-base = "light"
-primaryColor = "#ff4b4b"
-backgroundColor = "#1e1e1e"
-secondaryBackgroundColor = "#313131"
-textColor = "#ffffff"
-font = "sans serif"
+base="dark"  # Options: "light", "dark"
+primaryColor="blue"  # Main UI element color
+backgroundColor="#676767"  # App background color
+secondaryBackgroundColor="white"  # Sidebar/background accent color
+textColor="black"  # Text color for labels & UI elements
+font="sans serif"  # Options: "sans serif", "serif", "monospace"
+
+
+
+[logger]
+level="info"  # Options: "debug", "info", "warning", "error"
+format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+
+[server]
+port=8501  # Default Streamlit port
+enableCORS=false  # Allow cross-origin requests
+#enableXsrfProtection=true  # Security setting
+#headless=true  # Run without UI in the background
 

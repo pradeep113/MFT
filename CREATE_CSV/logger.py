@@ -1,16 +1,15 @@
+# logger.py
 import logging
 
-# Setup logger
-def setup_logger():
-    logger = logging.getLogger("auth_logger")
-    logger.setLevel(logging.INFO)
+# Configure logging settings
+logging.basicConfig(
+    filename="logs/streamlit_app.log",  # Log file name
+    level=logging.DEBUG,  # Logging level
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+)
 
-    # Prevent adding multiple handlers on rerun
-    if not logger.handlers:
-        fh = logging.FileHandler("auth.log")
-        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-        fh.setFormatter(formatter)
-        logger.addHandler(fh)
-
+def get_logger(name):
+    """Returns a logger instance."""
+    logger = logging.getLogger(name)
     return logger
 
