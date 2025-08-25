@@ -308,58 +308,79 @@ def initiate():
     st.caption(f"Developed by: Pradeep | Streamlit | Version: 1.0 🚀 | GoAnywhere Developer Tool | Date: {current_date}")
 
 #______CREATE WBUSER________________________________________________________________________________________________
+
 def create_webuser():
-    st.write("CRETAE WEBUSER SECTION")
+    st.write("CREATE WEBUSER SECTION")
+
     # App Title
     st.title("WEBUSER CREATION")
-    st.text("")    
-    webuser_protocol = st.selectbox("PROTOCOL TEMPLATE:", ["SFTP", "FTPS",])
-    if webuser_protocol == "SFTP":
-        with st.container():
-            webuser_name = st.text_input("Webuser Name")
-            description = st.text_input("Description")
+    st.text("")
 
-    with st.expander("Folder Settings"):  # Use expanders for optional settings
+    # Protocol selection
+    webuser_protocol = st.selectbox("PROTOCOL TEMPLATE:", ["SFTP", "FTPS"])
+
+    # Webuser details
+    #if webuser_protocol == "SFTP":
+        #SECTION TO SELECT SFTP AND FTPS WEB USER TEMPLATE
+    
+    with st.container():
+        webuser_name = st.text_input("Webuser Name")
+        description = st.text_input("Email address")
+
+        # Optional settings
+    with st.expander("📁 Optional Settings"):
+        firstname = st.text_input("First name")
+        lastname = st.text_input("Last name")
+        
 
 
-        # Step 1: Ask user how many folders to create
+    # Folder settings
+    with st.expander("📁 Folder Settings"):
         num_folders = st.number_input("How many folders do you want to create?", min_value=1, max_value=20, step=1)
 
-        # Step 2: Initialize session state for folder names and permissions
+        # Initialize session state with all required keys
+        required_keys = [
+            "name", "read", "download_read", "upload_write",
+            "overwrite", "append", "rename",
+            "delete", "checksum", "share",
+            "write", "execute"
+        ]
+
         if "folder_data" not in st.session_state or len(st.session_state.folder_data) != num_folders:
             st.session_state.folder_data = [
-                {"name": "", "read": False, "write": False, "execute": False}
+                {key: False if key != "name" else "" for key in required_keys}
                 for _ in range(num_folders)
-            ]  
+            ]
 
-        # Step 3: Dynamically create inputs
-        st.markdown("### Enter folder names and set permissions:")
+        # Dynamic input layout
+        st.markdown("### 🔧 Enter folder names and set permissions:")
         for i in range(num_folders):
             col1, col2, col3, col4 = st.columns([2, 1, 1, 1])
+            folder = st.session_state.folder_data[i]
+
             with col1:
-                st.session_state.folder_data[i]["name"] = st.text_input(f"Folder {i+1}", value=st.session_state.folder_data[i]["name"])
+                folder["name"] = st.text_input(f"Folder {i+1}", value=folder["name"], key=f"name_{i}")
+
             with col2:
-                st.session_state.folder_data[i]["read"] = st.checkbox("Read", key=f"read_{i}", value=st.session_state.folder_data[i]["read"])
+                folder["read"] = st.checkbox("Read", key=f"read_{i}", value=folder["read"])
+                folder["download_read"] = st.checkbox("Download(Read)", key=f"download_read_{i}", value=folder["download_read"])
+                folder["upload_write"] = st.checkbox("Upload(Write)", key=f"upload_write_{i}", value=folder["upload_write"])
+
             with col3:
-                st.session_state.folder_data[i]["write"] = st.checkbox("Write", key=f"write_{i}", value=st.session_state.folder_data[i]["write"])
-            with col4:
-                st.session_state.folder_data[i]["execute"] = st.checkbox("Execute", key=f"exec_{i}", value=st.session_state.folder_data[i]["execute"])
-            with col4:
-                st.session_state.folder_data[i]["execute"] = st.checkbox("Execute", key=f"e_{i}", value=st.session_state.folder_data[i]["execute"])
-            with col4:
-                st.session_state.folder_data[i]["execute"] = st.checkbox("Execute", key=f"exc_{i}", value=st.session_state.folder_data[i]["execute"])
-            with col4:
-                st.session_state.folder_data[i]["execute"] = st.checkbox("Execute", key=f"exe_{i}", value=st.session_state.folder_data[i]["execute"])
-            with col4:
-                st.session_state.folder_data[i]["execute"] = st.checkbox("Execute", key=f"exewc_{i}", value=st.session_state.folder_data[i]["execute"])
+                folder["overwrite"] = st.checkbox("Overwrite", key=f"overwrite_{i}", value=folder["overwrite"])
+                folder["append"] = st.checkbox("Append", key=f"append_{i}", value=folder["append"])
+                folder["rename"] = st.checkbox("Rename", key=f"rename_{i}", value=folder["rename"])
 
-    
+            with col4:
+                folder["delete"] = st.checkbox("Delete", key=f"delete_{i}", value=folder["delete"])
+                folder["checksum"] = st.checkbox("Checksum", key=f"checksum_{i}", value=folder["checksum"])
+                folder["share"] = st.checkbox("Share", key=f"share_{i}", value=folder["share"])
 
-        # Step 4: Display summary
-        st.markdown("### 📁 Folder Summary")
+        # Folder summary
+        st.markdown("### 📋 Folder Summary")
         for i, folder in enumerate(st.session_state.folder_data):
-            perms = [perm for perm in ["read", "write", "execute"] if folder[perm]]
-            st.write(f"{i+1}. **{folder['name']}** → Permissions: {', '.join(perms) if perms else 'None'}")
+            selected_perms = [key for key in folder if key != "name" and folder[key]]
+            st.write(f"{i+1}. **{folder['name']}** → Permissions: {', '.join(selected_perms) if selected_perms else 'None'}")
 
 
    
